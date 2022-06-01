@@ -7,45 +7,45 @@ void main() {
   Task task = Task(id: 0);
 
   group("Teste TaskRepository method", () {
-    test("replace method", () {
+    test("It should replace a task in list task", () {
       taskRepository.addTask(task);
       Task taskTest = Task(title: "ok", id: 0);
       expect(taskRepository.replace(taskTest), isA<TaskRepository>());
       expect(taskRepository.getTasks()[0].title, equals("ok"));
       taskRepository.removeTask(task);
     });
-    test("addTaskReturningThis method", () {
+
+    test("It should add task to list task and return a TaskRepository", () {
       expect(taskRepository.addTaskReturningThis(task), isA<TaskRepository>());
       expect(taskRepository.getTasks().length, equals(2));
     });
-    test("removeTaskRetuningThis method", () {
+    test("It should remove a task in list task and return TaskRepository", () {
       expect(
           taskRepository.removeTaskRetuningThis(task), isA<TaskRepository>());
       taskRepository.addTask(task);
     });
-    test("removeTask method", () {
+    test("It should add task to list task", () {
       expect(taskRepository.removeTask(task), isA<List<Task>>());
       taskRepository.addTask(task);
     });
-    test("changeCompleted method", () {
+    test("It should change the completed", () {
       taskRepository = TaskRepository();
       taskRepository.addTask(task);
       expect(
           taskRepository.changeCompleted(task), allOf(isA<TaskRepository>()));
       expect(taskRepository.getTasks()[0].completed, equals(true));
     });
-    test("getTasks method", () {
+    test("It should return a list of tasks", () {
       expect(taskRepository.getTasks(), isA<List<Task>>());
     });
-
-    test("getRepo method", () {
+    test("It should return 'this'", () {
       expect(taskRepository.getRepo(task), equals(taskRepository));
     });
-    test("add method", () {
+    test("It should add task to task and return a list of tasks", () {
       expect(taskRepository.addTask(task)[0].id, equals(task.id));
     });
     test(
-      "json method",
+      "It should convert the TaskReposiory into json-like code and return this json-like code",
       () {
         Task task2 = Task(id: 0, title: "title");
         final taskRepository2 = TaskRepository();

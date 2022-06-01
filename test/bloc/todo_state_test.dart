@@ -7,12 +7,18 @@ void main() {
   InicialTaskState inicialTaskState = InicialTaskState();
   TaskSuccessState taskSuccessState = TaskSuccessState(tasks: tasks);
 
-  group("Teste TaskRepository method", () {
-    test("AddTaskEvent extends TaskEvent", () {
+  group("TaskState", () {
+    test("InicialTaskState should be a TaskState", () {
       expect(inicialTaskState, allOf(isA<TaskState>()));
       expect(inicialTaskState.tasks, equals([]));
     });
-    test("RemoveTaskEvent extends TaskEvent", () {
+
+    test("Inicial Task list should be empty", () {
+      expect(inicialTaskState, allOf(isA<TaskState>()));
+      expect(inicialTaskState.tasks, equals([]));
+    });
+
+    test("TaskSuccessState should be a TaskState", () {
       expect(taskSuccessState, isA<TaskState>());
     });
   });

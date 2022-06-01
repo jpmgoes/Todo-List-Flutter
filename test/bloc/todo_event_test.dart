@@ -7,12 +7,19 @@ void main() {
   AddTaskEvent addEvent = AddTaskEvent(task: task);
   RemoveTaskEvent removeEvent = RemoveTaskEvent(task: task);
 
-  group("Teste TaskRepository method", () {
-    test("AddTaskEvent extends TaskEvent", () {
+  group("TaskEvent", () {
+    test("AddEvent should be a TaskEvent", () {
       expect(addEvent, isA<TaskEvent>());
     });
-    test("RemoveTaskEvent extends TaskEvent", () {
+    test("the Task from AddEvent should be a Task", () {
+      expect(addEvent.task, isA<Task>());
+    });
+
+    test("RemoveEvent should be a TaskEvent", () {
       expect(removeEvent, isA<TaskEvent>());
+    });
+    test("the Task from RemoveEvent should be a Task", () {
+      expect(removeEvent.task, isA<Task>());
     });
   });
 }

@@ -14,7 +14,9 @@ void main() {
       expect(find.byType(Checkbox), findsOneWidget);
     });
 
-    testWidgets("Test CheckBox", (tester) async {
+    testWidgets(
+        "It should verify checkbox when it activated and see what else happend in the view ",
+        (tester) async {
       await tester.pumpWidget(const MaterialApp(
         home: EditTaskPage(),
       ));

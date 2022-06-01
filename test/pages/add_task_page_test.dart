@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:just_todo/pages/add_task_page.dart';
 
 void main() {
-  group("AddTaskPage", () {
+  group("It should test the TodoList inicial page when has no task in the list",
+      () {
     testWidgets("Test Default AddTaskPage", (tester) async {
       await tester.pumpWidget(const MaterialApp(
         home: AddTaskPage(),
