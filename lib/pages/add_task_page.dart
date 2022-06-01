@@ -33,8 +33,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
         padding: FormWidgets.paddingWholeForm,
         child: Form(
           key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 160),
+          child: Center(
+            // padding: const EdgeInsets.only(top: 160),
             child: ListView(
               shrinkWrap: true,
               children: [
