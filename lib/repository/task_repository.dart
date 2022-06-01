@@ -85,11 +85,9 @@ class TaskRepository {
   TaskRepository changeCompleted(Task task) {
     for (var i = 0; i < _tasks.length; i++) {
       if (_tasks[i].id == task.id) {
-        // print("${_tasks[i].id} = ${task.id}");
         _tasks[i].completed = !_tasks[i].completed;
       }
     }
-    // print("Changed -> $_tasks");
     return this;
   }
 

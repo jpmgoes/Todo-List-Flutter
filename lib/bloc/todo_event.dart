@@ -13,7 +13,3 @@ class RemoveTaskEvent extends TaskEvent {
   Task task;
   RemoveTaskEvent({required this.task});
 }
-
-class PrintTaskEvent extends TaskEvent {
-  PrintTaskEvent();
-}

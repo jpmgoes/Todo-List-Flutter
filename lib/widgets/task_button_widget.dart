@@ -70,7 +70,13 @@ Widget _viewButton(List<Task> data, int index, setState, BuildContext context) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buttonInfoWidget(dataToShow, index),
+        Row(
+          children: [
+            Icon(Icons.settings, color: AppColors.weakWhite),
+            Container(width: 10),
+            _buttonInfoWidget(dataToShow, index),
+          ],
+        ),
         confirmedCheckBox(data, index, setState, context),
       ],
     ),

@@ -74,11 +74,16 @@ class _EditTaskPageState extends State<EditTaskPage> {
                   titleController,
                   "Nome da Task",
                   hint: "Estudar Grafos",
-                  validation: () =>
-                      FormValidation.titleValidation(titleController),
+                  validation: () => FormValidation.titleValidation(
+                      titleController, "A task requer title"),
                 ),
-                FormWidgets.normalCamp(descriptionController, "Descrição",
-                    height: 80),
+                FormWidgets.normalCamp(
+                  descriptionController,
+                  "Descrição",
+                  height: 80,
+                  validation: () => FormValidation.titleValidation(
+                      titleController, "A task requer descrição"),
+                ),
                 FormWidgets.formConfirmedCheckBox(task, context, setState),
                 CustomButtonWidget.draw(() {
                   if (_formKey.currentState!.validate()) {

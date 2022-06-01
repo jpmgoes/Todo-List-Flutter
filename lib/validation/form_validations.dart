@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class FormValidation {
-  static String? titleValidation(TextEditingController controller) {
-    if (controller.text.isEmpty) return "A task requer title";
+  static String? titleValidation(
+      TextEditingController controller, String error) {
+    if (controller.text.isEmpty) return error;
     return null;
   }
 
