@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just_todo/functions/task_edti_functions.dart';
+import 'package:just_todo/functions/task_edit_functions.dart';
 import 'package:just_todo/widgets/custom_btn_widget.dart';
 
 import '../constants/app_colors.dart';

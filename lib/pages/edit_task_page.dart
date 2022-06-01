@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_todo/constants/intent_keys.dart';
 import 'package:just_todo/functions/dialog.dart';
-import 'package:just_todo/functions/task_edti_functions.dart';
+import 'package:just_todo/functions/task_edit_functions.dart';
 
 import '../constants/app_colors.dart';
 import '../model/task.dart';

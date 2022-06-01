@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../routes/page_routes.dart';
 import '../validation/form_validations.dart';
-import 'task_edti_functions.dart';
+import 'task_edit_functions.dart';
 
 class Dialogs {
   static Future<void> showMyDialog(
