@@ -33,7 +33,7 @@ class _TaskButtonWidgetState extends State<TaskButtonWidget> {
       padding: const EdgeInsets.only(left: 32, right: 32, top: 30),
       child: Column(
         children: [
-          FormWidgets.titleDraw("TASK"),
+          FormWidgets.titleDraw("TASKS"),
           SizedBox(
             height: MediaQuery.of(context).size.height - 180,
             child: ListView.separated(

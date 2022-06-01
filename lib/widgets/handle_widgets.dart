@@ -14,7 +14,7 @@ Widget semTaskWarnWidget(List<Task> tasks) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: const [
           Text("Não há nada aqui"),
-          Text("Adicione uma nova task")
+          Text("Adicione uma nova task"),
         ],
       ),
     );

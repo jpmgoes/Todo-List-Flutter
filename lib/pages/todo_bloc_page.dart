@@ -56,6 +56,7 @@ class _TodoBlocPageState extends State<TodoBlocPage> {
                 return loadingWidgets();
               },
             ),
+            const Divider(),
             addTaskButtonWidget(context)
           ],
         ),
