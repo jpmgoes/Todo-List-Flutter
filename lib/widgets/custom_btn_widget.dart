@@ -9,11 +9,12 @@ class CustomButtonWidget {
     Color? color,
   }) {
     return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          fixedSize: Size(size, 24),
-          primary: color ?? AppColors.primaryColor,
-        ),
-        onPressed: () => {onPressed()},
-        child: Text(title));
+      style: ElevatedButton.styleFrom(
+        fixedSize: Size(size, 24),
+        primary: color ?? AppColors.primaryColor,
+      ),
+      onPressed: () => {onPressed()},
+      child: Text(title),
+    );
   }
 }

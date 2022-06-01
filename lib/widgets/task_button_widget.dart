@@ -71,9 +71,9 @@ Widget _viewButton(List<Task> data, int index, setState, BuildContext context) {
       children: [
         Row(
           children: [
-            _editTaskIcon(),
+            _editTaskIconBtn(context, dataToShow, index),
             Container(width: 10),
-            _buttonInfoWidget(dataToShow, index),
+            _buttonInfoWidget(dataToShow, index, context),
           ],
         ),
         confirmedCheckBox(data, index, setState, context),
@@ -82,21 +82,31 @@ Widget _viewButton(List<Task> data, int index, setState, BuildContext context) {
   );
 }
 
-Widget _editTaskIcon() {
-  return Container(
-    padding: const EdgeInsets.all(2),
-    decoration: BoxDecoration(
-      border: Border.all(
-        width: 1,
-        color: AppColors.weakWhite,
+Widget _editTaskIconBtn(
+    BuildContext context, List<Task> dataToShow, int index) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(2.0),
+        side: const BorderSide(color: Colors.white24),
       ),
-      borderRadius: const BorderRadius.all(Radius.circular(2)),
+      primary: Colors.transparent,
     ),
+    onLongPress: () =>
+        Dialogs.showMyDialog(context, data: dataToShow, index: index),
+    onPressed: () {
+      Navigator.pushNamed(context, PageRoutes.editTaskPage, arguments: {
+        IntentKey.intentKeyTask: dataToShow[index],
+        IntentKey.intentKeyData: dataToShow,
+        IntentKey.intentKeyIndex: index
+      });
+    },
     child: const Icon(Icons.edit_note),
   );
 }
 
-Widget _buttonInfoWidget(List<Task> dataToShow, int index) {
+Widget _buttonInfoWidget(
+    List<Task> dataToShow, int index, BuildContext context) {
   final task = dataToShow.elementAt(index);
   // description
   final descTam = task.description!.length;
@@ -104,8 +114,16 @@ Widget _buttonInfoWidget(List<Task> dataToShow, int index) {
 
   String desc = task.description!.trim();
   String title = task.title!.trim();
-  if (descTam >= 20) desc = "${desc.substring(0, 20).trim()}...";
-  if (titleTam >= 20) title = "${title.substring(0, 20).trim()}...";
+
+  double screenSize = MediaQuery.of(context).size.width;
+
+  double maxSize = screenSize * 0.03;
+  if (descTam >= maxSize) {
+    desc = "${desc.substring(0, maxSize.toInt()).trim()}...";
+  }
+  if (titleTam >= maxSize) {
+    title = "${title.substring(0, maxSize.toInt()).trim()}...";
+  }
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,9 +158,23 @@ Widget addTaskButtonWidget(BuildContext context) {
   return Stack(
     children: [
       Center(
+        child: Padding(
+          padding: const EdgeInsets.all(4),
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(40),
+            ),
+          ),
+        ),
+      ),
+      Center(
         child: Container(
+          padding: const EdgeInsets.only(bottom: 10),
           width: 50,
-          height: 50,
+          height: 49,
           decoration: BoxDecoration(
             color: Colors.transparent,
             borderRadius: BorderRadius.circular(40),
@@ -157,7 +189,7 @@ Widget addTaskButtonWidget(BuildContext context) {
       Center(
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: AppColors.primaryColor,
+            primary: Colors.transparent,
             minimumSize: const Size(40, 40),
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(50))),
