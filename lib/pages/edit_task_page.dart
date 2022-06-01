@@ -62,8 +62,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
         padding: FormWidgets.paddingWholeForm,
         child: Form(
           key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 160),
+          child: Center(
             child: ListView(
               shrinkWrap: true,
               children: [

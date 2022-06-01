@@ -30,24 +30,25 @@ class _TaskButtonWidgetState extends State<TaskButtonWidget> {
     final List<Task> dataToShow = List.from(data.reversed);
 
     return Padding(
-        padding: const EdgeInsets.only(left: 32, right: 32, top: 30),
-        child: Column(
-          children: [
-            FormWidgets.titleDraw("TASK"),
-            SizedBox(
-              height: MediaQuery.of(context).size.height - 180,
-              child: ListView.separated(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: data.length,
-                  separatorBuilder: (context, index) =>
-                      const Divider(color: Colors.transparent),
-                  itemBuilder: (context, index) {
-                    return _viewButton(data, index, setState, context);
-                  }),
-            ),
-          ],
-        ));
+      padding: const EdgeInsets.only(left: 32, right: 32, top: 30),
+      child: Column(
+        children: [
+          FormWidgets.titleDraw("TASK"),
+          SizedBox(
+            height: MediaQuery.of(context).size.height - 180,
+            child: ListView.separated(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: data.length,
+                separatorBuilder: (context, index) =>
+                    const Divider(color: Colors.transparent),
+                itemBuilder: (context, index) {
+                  return _viewButton(data, index, setState, context);
+                }),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -189,13 +190,37 @@ Future<String?> removeTask(Task task) async {
 }
 
 Widget addTaskButtonWidget(BuildContext context) {
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      primary: AppColors.primaryColor,
-    ),
-    onPressed: () {
-      Navigator.pushNamed(context, PageRoutes.addTaskPage);
-    },
-    child: const Text("+"),
+  return Stack(
+    children: [
+      Center(
+        child: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(40),
+            border: Border.all(
+              width: 2,
+              color: AppColors.primaryColor,
+            ),
+            // ),
+          ),
+        ),
+      ),
+      Center(
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: AppColors.primaryColor,
+            minimumSize: const Size(40, 40),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(50))),
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, PageRoutes.addTaskPage);
+          },
+          child: const Text("+"),
+        ),
+      ),
+    ],
   );
 }
