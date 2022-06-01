@@ -22,9 +22,9 @@ class EditTaskPage extends StatefulWidget {
 class _EditTaskPageState extends State<EditTaskPage> {
   final _formKey = GlobalKey<FormState>();
 
-  Task task = Task(id: -1);
+  Task task = Task(id: 0);
   late List<Task> allData;
-  late int index = -1;
+  late int index = 0;
 
   late String title;
   late String desc;
@@ -49,7 +49,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
     titleController.text = title;
     descriptionController.text = desc;
 
-    String showTitle = "${title.substring(0, 4).toUpperCase()}...";
+    String showTitle = title.toUpperCase();
 
     if (title.length > 5) {
       showTitle = "${title.substring(0, 4).toUpperCase()}...";

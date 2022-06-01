@@ -49,7 +49,7 @@ class _TodoBlocPageState extends State<TodoBlocPage> {
                 if (snapshot.hasData) {
                   final tasks = snapshot.data!.tasks;
                   if (tasks.isEmpty) return semTaskWarnWidget(tasks);
-                  return TaskButtonWidget(data: tasks, bloc: tasksBloc);
+                  return TaskButtonWidget(data: tasks);
                 } else if (snapshot.hasError) {
                   return erroFindTaskWidget();
                 }

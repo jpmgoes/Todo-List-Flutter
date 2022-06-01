@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:just_todo/constants/intent_keys.dart';
 import 'package:just_todo/widgets/form_widgets.dart';
 
-import '../bloc/todo_bloc.dart';
 import '../constants/app_colors.dart';
 import '../constants/preferences_keys.dart';
 import '../constants/shared_pref.dart';
@@ -15,11 +14,9 @@ class TaskButtonWidget extends StatefulWidget {
   const TaskButtonWidget({
     Key? key,
     required this.data,
-    required this.bloc,
   }) : super(key: key);
 
   final List<Task> data;
-  final TodoBloc bloc;
 
   @override
   State<TaskButtonWidget> createState() => _TaskButtonWidgetState();
@@ -32,8 +29,6 @@ class _TaskButtonWidgetState extends State<TaskButtonWidget> {
 
     final List<Task> dataToShow = List.from(data.reversed);
 
-    final length = data.length;
-
     return Padding(
       padding: const EdgeInsets.only(left: 32, right: 32, top: 30),
       child: SizedBox(
@@ -41,7 +36,7 @@ class _TaskButtonWidgetState extends State<TaskButtonWidget> {
         child: ListView.separated(
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
-            itemCount: length,
+            itemCount: data.length,
             separatorBuilder: (context, index) =>
                 const Divider(color: Colors.transparent),
             itemBuilder: (context, index) {
