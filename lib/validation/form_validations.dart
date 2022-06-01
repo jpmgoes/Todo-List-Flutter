@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 class FormValidation {
-  static String? titleValidation(
-      TextEditingController controller, String error) {
-    if (controller.text.isEmpty) return error;
+  static String? titleValidation(TextEditingController controller) {
+    if (controller.text.isEmpty) return "A task requer título";
     return null;
   }
 
-  static String? scaffoldMessenger(
+  static scaffoldMessenger(
     String? value,
     BuildContext context,
     String success,
@@ -22,6 +21,5 @@ class FormValidation {
         SnackBar(content: Text(faild)),
       );
     }
-    return null;
   }
 }

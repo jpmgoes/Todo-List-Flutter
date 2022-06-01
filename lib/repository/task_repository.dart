@@ -1,5 +1,5 @@
 import 'package:just_todo/constants/preferences_keys.dart';
-import 'package:just_todo/constants/shared_pref.dart';
+import 'package:just_todo/functions/shared_pref.dart';
 import 'package:just_todo/model/task.dart';
 
 class TaskRepository {

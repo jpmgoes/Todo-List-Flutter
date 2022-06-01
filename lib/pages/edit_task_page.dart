@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_todo/constants/intent_keys.dart';
-import 'package:just_todo/constants/preferences_keys.dart';
-import 'package:just_todo/constants/shared_pref.dart';
-import 'package:just_todo/repository/task_repository.dart';
-import 'package:just_todo/widgets/task_button_widget.dart';
+import 'package:just_todo/functions/dialog.dart';
+import 'package:just_todo/functions/task_edti_functions.dart';
 
 import '../constants/app_colors.dart';
 import '../model/task.dart';
@@ -63,68 +61,62 @@ class _EditTaskPageState extends State<EditTaskPage> {
         child: Form(
           key: _formKey,
           child: Center(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                FormWidgets.titleDraw(
-                  "EDITAR TASK $showTitle",
-                  dividerHeight: 64,
-                ),
-                FormWidgets.normalCamp(
-                  titleController,
-                  "Nome da Task",
-                  hint: "Estudar Grafos",
-                  validation: () => FormValidation.titleValidation(
-                      titleController, "A task requer title"),
-                ),
-                FormWidgets.normalCamp(
-                  descriptionController,
-                  "Descrição",
-                  height: 80,
-                  validation: () => FormValidation.titleValidation(
-                      titleController, "A task requer descrição"),
-                ),
-                FormWidgets.formConfirmedCheckBox(task, context, setState),
-                CustomButtonWidget.draw(() {
-                  if (_formKey.currentState!.validate()) {
-                    _updateTask().then((value) {
-                      FormValidation.scaffoldMessenger(
-                        value,
-                        context,
-                        "TASK ${value?.toUpperCase()} ATUALIZADA",
-                        "ALGO DEU ERRADO",
-                      );
-                      PageRoutes.toHomePage(context);
-                    });
-                  }
-                }, "ATUALIZAR TASK", 280),
-                CustomButtonWidget.draw(() {
-                  showMyDialog(context, taskArg: task);
-                }, "DELETAR TASK", 280, color: AppColors.alertColor),
-              ],
-            ),
+            child: _addTaskForm(context, showTitle),
           ),
         ),
       ),
     );
   }
 
-  Future<String?> _updateTask() async {
-    final sharedPref = SharedPref();
-    final value = await sharedPref.read(PreferencesKeys.tasks);
-
-    final taskUpdated = Task(
-      title: titleController.text,
-      description: descriptionController.text,
-      completed: task.completed,
-      id: task.id,
+  Widget _addTaskForm(BuildContext context, showTitle) {
+    return ListView(
+      shrinkWrap: true,
+      children: [
+        FormWidgets.titleDraw(
+          "EDITAR TASK $showTitle",
+          dividerHeight: 64,
+        ),
+        FormWidgets.normalCamp(
+          titleController,
+          "Nome da Task",
+          hint: "Estudar Grafos",
+          validation: () => FormValidation.titleValidation(titleController),
+        ),
+        FormWidgets.normalCamp(
+          descriptionController,
+          "Descrição",
+          height: 80,
+        ),
+        FormWidgets.formConfirmedCheckBox(task, context, setState),
+        _updateTaskBtn(context),
+        _deleteTaskButton(context),
+      ],
     );
+  }
 
-    TaskRepository newTaskRepo = TaskRepository.fromJson(value);
-    newTaskRepo = newTaskRepo.replace(taskUpdated);
+  Widget _updateTaskBtn(BuildContext context) {
+    return CustomButtonWidget.draw(() {
+      if (_formKey.currentState!.validate()) {
+        TaskEditFunctions.updateTask(
+          titleController,
+          descriptionController,
+          task,
+        ).then((value) {
+          FormValidation.scaffoldMessenger(
+            value,
+            context,
+            "TASK ${value?.toUpperCase()} ATUALIZADA",
+            "ALGO DEU ERRADO",
+          );
+          PageRoutes.toHomePage(context);
+        });
+      }
+    }, "ATUALIZAR TASK", 280);
+  }
 
-    sharedPref.save(PreferencesKeys.tasks, newTaskRepo);
-
-    return title;
+  Widget _deleteTaskButton(BuildContext context) {
+    return CustomButtonWidget.draw(() {
+      Dialogs.showMyDialog(context, taskArg: task);
+    }, "DELETAR TASK", 280, color: AppColors.alertColor);
   }
 }

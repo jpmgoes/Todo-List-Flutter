@@ -44,14 +44,17 @@ void main() {
     test("add method", () {
       expect(taskRepository.addTask(task)[0].id, equals(task.id));
     });
-    test("json method", () {
-      taskRepository = TaskRepository();
-      taskRepository.addTask(task);
-
-      expect(taskRepository.toJson(), isA<Map<String, dynamic>>());
-
-      expect(TaskRepository.fromJson(taskRepository.toJson()),
-          isA<TaskRepository>());
-    });
+    test(
+      "json method",
+      () {
+        Task task2 = Task(id: 0, title: "title");
+        final taskRepository2 = TaskRepository();
+        taskRepository2.addTask(task2);
+        expect(
+          taskRepository2.toJson(),
+          isA<Map<String, dynamic>>(),
+        );
+      },
+    );
   });
 }

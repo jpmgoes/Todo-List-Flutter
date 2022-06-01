@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:just_todo/constants/intent_keys.dart';
+import 'package:just_todo/functions/dialog.dart';
+import 'package:just_todo/functions/task_edti_functions.dart';
 import 'package:just_todo/widgets/form_widgets.dart';
 
 import '../constants/app_colors.dart';
-import '../constants/preferences_keys.dart';
-import '../constants/shared_pref.dart';
 import '../model/task.dart';
-import '../repository/task_repository.dart';
 import '../routes/page_routes.dart';
-import '../validation/form_validations.dart';
 
 class TaskButtonWidget extends StatefulWidget {
   const TaskButtonWidget({
@@ -59,7 +57,8 @@ Widget _viewButton(List<Task> data, int index, setState, BuildContext context) {
       primary: AppColors.primaryColor,
       minimumSize: const Size(double.infinity, 80),
     ),
-    onLongPress: () => showMyDialog(context, data: dataToShow, index: index),
+    onLongPress: () =>
+        Dialogs.showMyDialog(context, data: dataToShow, index: index),
     onPressed: () {
       Navigator.pushNamed(context, PageRoutes.editTaskPage, arguments: {
         IntentKey.intentKeyTask: dataToShow[index],
@@ -72,7 +71,7 @@ Widget _viewButton(List<Task> data, int index, setState, BuildContext context) {
       children: [
         Row(
           children: [
-            Icon(Icons.settings, color: AppColors.weakWhite),
+            _editTaskIcon(),
             Container(width: 10),
             _buttonInfoWidget(dataToShow, index),
           ],
@@ -80,6 +79,20 @@ Widget _viewButton(List<Task> data, int index, setState, BuildContext context) {
         confirmedCheckBox(data, index, setState, context),
       ],
     ),
+  );
+}
+
+Widget _editTaskIcon() {
+  return Container(
+    padding: const EdgeInsets.all(2),
+    decoration: BoxDecoration(
+      border: Border.all(
+        width: 1,
+        color: AppColors.weakWhite,
+      ),
+      borderRadius: const BorderRadius.all(Radius.circular(2)),
+    ),
+    child: const Icon(Icons.edit_note),
   );
 }
 
@@ -118,81 +131,9 @@ Widget confirmedCheckBox(
           task.completed = !task.completed;
           final realPosition = data.length - index - 1;
           scaffoldMessager(data.elementAt(realPosition), context);
-          changingCompleted(data.elementAt(realPosition));
+          TaskEditFunctions.changingCompleted(data.elementAt(realPosition));
         });
       });
-}
-
-changingCompleted(Task task) async {
-  final sharedPref = SharedPref();
-  final value = await sharedPref.read(PreferencesKeys.tasks);
-  var newTaskRepo = TaskRepository.fromJson(value);
-  // print("$value == $newTaskRepo");
-  newTaskRepo = newTaskRepo.changeCompleted(task);
-  sharedPref.save(PreferencesKeys.tasks, newTaskRepo);
-}
-
-Future<void> showMyDialog(
-  BuildContext context, {
-  List<Task>? data,
-  int? index,
-  Task? taskArg,
-}) async {
-  late Task task;
-
-  if (data != null && index != null && taskArg == null) {
-    task = data[index];
-  } else {
-    task = taskArg!;
-  }
-
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Remover Task ${task.title!.toUpperCase()}'),
-        content: const SingleChildScrollView(
-          child: Text('Você gostaria de remover essa task?'),
-        ),
-        actions: <Widget>[
-          TextButton(
-            style: TextButton.styleFrom(
-              primary: AppColors.alertColor,
-            ),
-            child: const Text('REMOVER'),
-            onPressed: () {
-              removeTask(task).then((value) {
-                FormValidation.scaffoldMessenger(
-                  value,
-                  context,
-                  "TASK ${value?.toUpperCase()} REMOVIDA",
-                  "TASK NÃO FOI REMOVIDA",
-                );
-                PageRoutes.toHomePage(context);
-              });
-            },
-          ),
-          TextButton(
-            child: const Text('CANCELAR'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
-Future<String?> removeTask(Task task) async {
-  final sharedPref = SharedPref();
-  final value = await sharedPref.read(PreferencesKeys.tasks);
-
-  TaskRepository newTaskRepo = TaskRepository.fromJson(value);
-  newTaskRepo = newTaskRepo.removeTaskRetuningThis(task);
-
-  sharedPref.save(PreferencesKeys.tasks, newTaskRepo);
-  return task.title;
 }
 
 Widget addTaskButtonWidget(BuildContext context) {

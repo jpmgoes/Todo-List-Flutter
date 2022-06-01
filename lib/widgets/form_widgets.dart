@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:just_todo/widgets/task_button_widget.dart';
+import 'package:just_todo/functions/task_edti_functions.dart';
 
 import '../constants/app_colors.dart';
 import '../constants/form_constants.dart';
 import '../model/task.dart';
 
 class FormWidgets {
-  static normalCamp(
+  static Widget normalCamp(
     TextEditingController controller,
     String title, {
     dynamic validation,
@@ -53,7 +53,7 @@ class FormWidgets {
   static EdgeInsets paddingWholeForm = EdgeInsets.only(
       left: FormConstants.paddingSides, right: FormConstants.paddingSides);
 
-  static titleDraw(String title, {double dividerHeight = 16}) => Column(
+  static Widget titleDraw(String title, {double dividerHeight = 16}) => Column(
         children: [
           Text(
             title,
@@ -69,7 +69,8 @@ class FormWidgets {
           )
         ],
       );
-  static formConfirmedCheckBox(Task task, BuildContext context, setState) {
+  static Widget formConfirmedCheckBox(
+      Task task, BuildContext context, setState) {
     String label =
         (task.completed) ? "MARCADA COMO FEITA" : "AINDA NÃO CONCLUÍDA";
 
@@ -80,7 +81,7 @@ class FormWidgets {
         onChanged: (value) {
           setState(() {
             task.completed = !task.completed;
-            changingCompleted(task);
+            TaskEditFunctions.changingCompleted(task);
 
             scaffoldMessager(task, context);
           });
@@ -88,7 +89,7 @@ class FormWidgets {
   }
 }
 
-scaffoldMessager(Task task, BuildContext context) {
+void scaffoldMessager(Task task, BuildContext context) {
   String output = (task.completed)
       ? "TASK ${task.title!.toUpperCase()} MARCADA COMO FEITA"
       : "TASK ${task.title!.toUpperCase()} AINDA NÃO CONCLUÍDA";

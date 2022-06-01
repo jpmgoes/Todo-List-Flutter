@@ -10,9 +10,11 @@ void main() {
   group("Teste TaskRepository method", () {
     test("AddTaskEvent extends TaskEvent", () {
       expect(addEvent, isA<TaskEvent>());
+      expect(addEvent.task, isA<Task>());
     });
     test("RemoveTaskEvent extends TaskEvent", () {
       expect(removeEvent, isA<TaskEvent>());
+      expect(removeEvent.task, isA<Task>());
     });
   });
 }
