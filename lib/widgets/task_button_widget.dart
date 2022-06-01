@@ -30,20 +30,24 @@ class _TaskButtonWidgetState extends State<TaskButtonWidget> {
     final List<Task> dataToShow = List.from(data.reversed);
 
     return Padding(
-      padding: const EdgeInsets.only(left: 32, right: 32, top: 30),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height - 80,
-        child: ListView.separated(
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemCount: data.length,
-            separatorBuilder: (context, index) =>
-                const Divider(color: Colors.transparent),
-            itemBuilder: (context, index) {
-              return _viewButton(data, index, setState, context);
-            }),
-      ),
-    );
+        padding: const EdgeInsets.only(left: 32, right: 32, top: 30),
+        child: Column(
+          children: [
+            FormWidgets.titleDraw("TASK"),
+            SizedBox(
+              height: MediaQuery.of(context).size.height - 180,
+              child: ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: data.length,
+                  separatorBuilder: (context, index) =>
+                      const Divider(color: Colors.transparent),
+                  itemBuilder: (context, index) {
+                    return _viewButton(data, index, setState, context);
+                  }),
+            ),
+          ],
+        ));
   }
 }
 
@@ -52,6 +56,7 @@ Widget _viewButton(List<Task> data, int index, setState, BuildContext context) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
       primary: AppColors.primaryColor,
+      minimumSize: const Size(double.infinity, 80),
     ),
     onLongPress: () => showMyDialog(context, data: dataToShow, index: index),
     onPressed: () {
@@ -73,11 +78,14 @@ Widget _viewButton(List<Task> data, int index, setState, BuildContext context) {
 
 Widget _buttonInfoWidget(List<Task> dataToShow, int index) {
   final task = dataToShow.elementAt(index);
-  final title = task.title!.trim();
   // description
   final descTam = task.description!.length;
+  final titleTam = task.title!.length;
+
   String desc = task.description!.trim();
+  String title = task.title!.trim();
   if (descTam >= 20) desc = "${desc.substring(0, 20).trim()}...";
+  if (titleTam >= 20) title = "${title.substring(0, 20).trim()}...";
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
